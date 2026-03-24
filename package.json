@@ -1,0 +1,12 @@
+{
+  "name": "aviability",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "bunx concurrently \"cd project-frontend && bun run dev\" \"cd project-backend && bun run dev\"",
+    "db": "rm -f project-backend/config/database/app.db && cd project-backend && bun run push",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  }
+}
