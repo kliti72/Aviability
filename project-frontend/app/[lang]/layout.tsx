@@ -1,10 +1,9 @@
-// app/[lang]/layout.tsx — LANG (zero html/body qui!)
-
 import { Metadata } from "next";
 import { DEFAULT_LOCALE, getT, Locale, LOCALES } from "./i18n/translations";
 import { Providers } from "../provider";
 import { AuthProvider } from "./context/AuthContext";
 import { LangProvider } from "./context/LangContext";
+import Header from "./components/header";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ lang: string }> }
@@ -38,6 +37,7 @@ export default async function LangLayout({
   return (
     <Providers>
       <AuthProvider>
+        <Header />
             <LangProvider lang={locale}>
                 {children}
             </LangProvider>
