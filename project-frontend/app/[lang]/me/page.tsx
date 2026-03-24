@@ -193,7 +193,7 @@ export default function MePage() {
           height: "60px",
           position: "sticky",
           top: 0,
-          zIndex: 50,
+          zIndex: 0,
         }}
       >
         <Link

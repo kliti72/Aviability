@@ -69,4 +69,17 @@ Publish → Offer → Match
 - [ ] Events — create a gathering, reward participants
 - [ ] Mobile app
 
+
+## Style Prompt For Component
+
+Stile Aviability — Next.js, inline styles, niente CSS framework.
+Palette: bg #fafffe, dark #0a1628, primary green #059669, accent #34d399/#6ee7b7, grigi #4b5563/#6b7280, card bg #fff, borders verdi #bbf7d0/#d1fae5.
+Typography: fontWeight 800 titoli / 700 label / 600 secondary. Letter-spacing -0.03em/-0.04em sui titoli. clamp() per fluid sizing. Badge uppercase 13px con letterSpacing: 0.06em.
+Cards: borderRadius: 24px, border #bbf7d0 o #e5e7eb, boxShadow: 0 4px 20px rgba(5,150,105,0.07), hover translateY(-4px) + shadow più intenso.
+Buttons: primario = gradiente #059669→#10b981, borderRadius: 14px, shadow verde. Outline = bg bianco, border #d1d5db, hover bg #f0fdf4.
+Animations: fadeUp (opacity+translateY 28px), fadeIn, stagger con delay incrementale. Hover transition: 0.18–0.2s ease.
+Sezioni dark: gradiente #064e3b→#047857 con radial-gradient overlay verde semitrasparente.
+Decorazioni: floating dots pulse-dot, watermark numeri in background, badge pillola border-radius: 999px.
+Il componente deve essere "use client", usare Link da Next.js per i link, nessuna dipendenza esterna.
+
 ---

@@ -9,9 +9,9 @@ const NAV_ITEMS = [
     label: "Home",
     href: "/",
     items: [
-      { label: "Come funziona", href: "/#how-it-works", desc: "Scopri il loop Publish → Offer → Match" },
-      { label: "Filosofia", href: "/#philosophy", desc: "Perché il tempo vale più del denaro" },
-      { label: "Roadmap", href: "/#roadmap", desc: "Cosa stiamo costruendo" },
+      { label: "Come funziona", href: "/landing/how-it-works", desc: "Scopri il loop Publish → Offer → Match" },
+      { label: "Filosofia", href: "/landing/philosophy", desc: "Perché il tempo vale più del denaro" },
+      { label: "Roadmap", href: "/landing/roadmap", desc: "Cosa stiamo costruendo" },
     ],
   },
   {
@@ -24,23 +24,21 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Exchange",
-    href: "/exchange",
-    items: [
-      { label: "My Offers", href: "/exchange/offers", desc: "Gestisci le offerte inviate e ricevute" },
-      { label: "Matches", href: "/exchange/matches", desc: "Scambi confermati da entrambe le parti" },
-      { label: "Affidability Score", href: "/exchange/score", desc: "La tua reputazione basata sulle recensioni" },
-    ],
-  },
-  {
     label: "Community",
     href: "/community",
     items: [
-      { label: "Events", href: "/community/events", desc: "Crea un raduno, premia i partecipanti" },
-      { label: "Real-time Notifications", href: "/community/notifications", desc: "Aggiornamenti istantanei sui tuoi scambi" },
-      { label: "How to contribute", href: "/community/contribute", desc: "Aiutaci a costruire Aviability" },
+      { label: "Community (idea)..", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
     ],
   },
+  // {
+  //   label: "Community",
+  //   href: "/community",
+  //   items: [
+  //     { label: "Events", href: "/community/events", desc: "Crea un raduno, premia i partecipanti" },
+  //     { label: "Real-time Notifications", href: "/community/notifications", desc: "Aggiornamenti istantanei sui tuoi scambi" },
+  //     { label: "How to contribute", href: "/community/contribute", desc: "Aiutaci a costruire Aviability" },
+  //   ],
+  // },
 ];
 
 function DropdownMenu({ items }: { items: typeof NAV_ITEMS[0]["items"] }) {
@@ -213,7 +211,7 @@ export default function Header() {
               justifyContent: "center",
               boxShadow: "0 2px 8px rgba(42, 255, 4, 0.33)",
             }}>
-				<img src="./logo.png" />
+				<img src="/logo.png" />
             </div>
             <span style={{
               fontWeight: 800,
