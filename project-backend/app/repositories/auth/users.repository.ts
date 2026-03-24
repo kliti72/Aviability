@@ -1,6 +1,6 @@
 import { db } from '../../../config/database'
 import { users } from '../../../config/schema'
-import type { Users, CreateUsersDto } from '../../types/auth/users.types'
+import type { Users, CreateUsersDto } from '../../types/auth/types'
 import { eq, desc, and, sql } from 'drizzle-orm'
 export function findAll(): Users[] {
   return db.select().from(users).orderBy(desc(users.createdAt)).all()

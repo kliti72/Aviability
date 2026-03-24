@@ -1,4 +1,4 @@
-import type { CreateUsersDto, Users } from "../../types/auth/users.types"
+import type { CreateUsersDto, Users } from "../../types/auth/types"
 import * as usersRepository from "../../repositories/auth/users.repository"
 
 export const usersService = {

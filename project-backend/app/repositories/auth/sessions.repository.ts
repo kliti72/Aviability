@@ -1,7 +1,7 @@
 import { db } from '../../../config/database'
 import { sessions } from '../../../config/schema'
-import type { Sessions, CreateSessionsDto } from '../../types/auth/sessions.types'
 import { eq, desc } from 'drizzle-orm'
+import type { CreateSessionsDto, Sessions } from '../../types/auth/types'
 
 export function findAll(): Sessions[] {
   return db.select().from(sessions).orderBy(desc(sessions.createdAt)).all()

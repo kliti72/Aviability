@@ -11,6 +11,10 @@ import { VerifyEmailController } from './controllers/auth/verify.email.controlle
 import { MagicAuthController } from './controllers/auth/magic.auth.controller'
 import { authMiddleware } from './middleware/auth.middleware'
 import { adminController } from './controllers/auth/admin.controller'
+import { aviabilitiesController } from './controllers/aviabilities.controller'
+import { aviabilityOffersController } from './controllers/aviabilityOffers.controller'
+import { exchangeConfirmationsController } from './controllers/exchangeConfirmations.controller'
+import { reviewsController } from './controllers/reviews.controller'
 
 export const routes: RouteConfig[] = [
   {
@@ -40,6 +44,28 @@ export const routes: RouteConfig[] = [
   },
   {
     controller: usersController,
+    enabled: true,
+    middleware: [],
+  },
+  {
+    controller: aviabilitiesController,
+    enabled: true,
+    middleware: [],
+  },
+  
+  {
+    controller: aviabilityOffersController,
+    enabled: true,
+    middleware: [],
+  },
+  
+  {
+    controller: exchangeConfirmationsController,
+    enabled: true,
+    middleware: [],
+  },
+  {
+    controller: reviewsController,
     enabled: true,
     middleware: [],
   },

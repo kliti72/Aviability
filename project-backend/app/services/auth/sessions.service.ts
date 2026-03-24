@@ -1,6 +1,6 @@
 import type { OAuth2Tokens } from 'arctic'
 import * as sessionsRepository from '../../repositories/auth/sessions.repository'
-import type { Users } from '../../types/auth/users.types'
+import type { Users } from '../../types/auth/types'
 
 export const sessionsService = {
 

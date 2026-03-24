@@ -76,6 +76,20 @@ Aggiungere anche la sezione Talent o Magic, insegnare trucchi di magia
 Aggiungere la Sezione anche Music, dove utenti possono pubblicare testi o farsi aiutare a produrrere musica
 Aggiungere la sezione Event, Eventi in cui unirsi per città, con form di registrazione all'evento
 
+Aggiungere la sezione Padre: City 
+    - Pulire Città
+    - Terminare costruzioni
+    Per roba enterprise di livello successivo
+
+
+## Bancked Claude tutorial
+Il flusso completo funziona così:
+POST /aviabilities → pubblica, expiresAt = +10gg auto
+POST /aviabilities/:id/offers → fa un'offerta — bloccato se hai review pending
+PATCH /offers/:id/accept → publisher accetta → declina le altre → crea ExchangeConfirmation
+PATCH /confirmations/:id/confirm-publisher + confirm-offerer → doppia conferma → quando entrambi confermano: aviability → completed, generate 2 ReviewRequest
+POST /reviews/requests/:id → lascia la review → aggiorna affidabilityScore in automatico
+Una cosa da fare lato app — registra tutti e 4 i controller sull'istanza Elysia principale e aggiungi il job schedulato per expireStale() e markOverdueRequests() 🤙
 
 ## Style Prompt For Component
 

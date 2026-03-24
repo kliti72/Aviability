@@ -28,6 +28,11 @@ export function fromGoogleResponse(raw: GoogleUserRaw): Omit<Users, 'id' | 'crea
   locale: raw.local ?? 'en',
   bio: '',
   handle: null,
-  role: 'user'
+  role: 'user',
+  ipAddress: null,
+  userAgent: null,
+  deletedAt: null,
+  affidabilityScore: 0,
+  reviewCount: 0,
 }
 }
