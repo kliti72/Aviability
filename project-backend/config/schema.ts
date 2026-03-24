@@ -23,6 +23,39 @@ export const users = sqliteTable('users', {
   check('bio_length', sql`length(${table.bio}) <= 300`),
 ])
 
+// Ci sono anche informazioni dell'utente, indirizzo ip,
+// deve essere tutto a norma legale, criptazione dei dati sensibili
+// e limiti di input chiari per ogni colonna
+
+
+// Qui ogni utente deve avere le Aviability
+// C'è da definire lo schema delle Avviability
+// L'aviability ha data di inserimento
+// Data di rimozione (10 giorni dopo la pubblicazione)
+// Status Chi richiede richiede remoto o fisico
+// Status Fisico o Remota
+// slag descrizione, cosa vuole l'utente in cambio di questo scambio
+// chi cerca, se è remoto o fisico
+// Se accetta un scambio solo remoto o fisico
+// c'è da definire meglio
+// Status se ha già un offerente ed è stata chiusa
+
+// Poi si deve essere Aviability_offers
+// le offerte fatte per ogni Aviability
+// Ogni utente può fare al massimo 2 offerte per lo scambio
+// Tutto il contenuto è pubblico niente chat privata.
+// Solo quando ci si mette d'accordo con lo scambio
+// status se è stata accettata
+
+// Poi viene creato la Review_request
+// Viene creata nel momento in cui un utente accetta uno scambio
+// A ogni utente viene chiesto la review,
+// Deve essere obbligatoria, se si hanno delle review in sospese
+// l'utente non deve poter scrivere altre offerte
+// deve essere prima invitato a lasciare la recensione di quella vecchia
+// Dovrà essere bloccatodopo tot giorni che la review è stata aperta ed è scaduta.
+
+
 export const magicLinks = sqliteTable('magic_links', {
   id: text('id').primaryKey(),
   email: text('email').notNull(),

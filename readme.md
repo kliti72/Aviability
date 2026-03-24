@@ -70,6 +70,13 @@ Publish → Offer → Match
 - [ ] Mobile app
 
 
+## ToDo
+Aggiungere la sezione sport, insegnare strumenti o altro per sport o passione
+Aggiungere anche la sezione Talent o Magic, insegnare trucchi di magia
+Aggiungere la Sezione anche Music, dove utenti possono pubblicare testi o farsi aiutare a produrrere musica
+Aggiungere la sezione Event, Eventi in cui unirsi per città, con form di registrazione all'evento
+
+
 ## Style Prompt For Component
 
 Stile Aviability — Next.js, inline styles, niente CSS framework.
