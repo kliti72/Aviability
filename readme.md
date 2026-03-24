@@ -1,12 +1,16 @@
-# Aviability
 
+## Philosophy
+
+> In a world optimized for transactions, Aviability ids optimize for **people**.
+> Your availability has value. Someone out there needs exactly what you can offer.
 > **Switch your availability with others.**
 
-Aviability is a platform where you publish what you can offer — and find what you need in return. 
-No money. 
-No algorithms. 
+---
 
-Just people exchanging availability.
+Aviability is a platform where you publish what you can offer — and find what you need in return. 
+
+- No money. 
+- No algorithms. 
 
 ---
 
@@ -66,8 +70,3 @@ Publish → Offer → Match
 - [ ] Mobile app
 
 ---
-
-## Philosophy
-
-> In a world optimized for transactions, Aviability ids optimize for **people**.
-> Your availability has value. Someone out there needs exactly what you can offer.
