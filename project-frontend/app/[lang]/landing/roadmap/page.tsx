@@ -331,7 +331,7 @@ export default function RoadmapPage() {
               Progetto solo-dev, open source
             </p>
             <p style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.5 }}>
-              Ogni contributo — codice, design, feedback — fa davvero la differenza.
+              Ogni contributo — codice, design, feedback — è buono che ci sia.
             </p>
           </div>
         </div>

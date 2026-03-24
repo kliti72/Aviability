@@ -27,18 +27,14 @@ const NAV_ITEMS = [
     label: "Community",
     href: "/community",
     items: [
-      { label: "Community (idea)..", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      { label: "Community", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Sport", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Musica", href: "/musica", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Eventi", href: "/eventi", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Talent", href: "/talenti", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Magia", href: "/magia", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
     ],
   },
-  // {
-  //   label: "Community",
-  //   href: "/community",
-  //   items: [
-  //     { label: "Events", href: "/community/events", desc: "Crea un raduno, premia i partecipanti" },
-  //     { label: "Real-time Notifications", href: "/community/notifications", desc: "Aggiornamenti istantanei sui tuoi scambi" },
-  //     { label: "How to contribute", href: "/community/contribute", desc: "Aiutaci a costruire Aviability" },
-  //   ],
-  // },
 ];
 
 function DropdownMenu({ items }: { items: typeof NAV_ITEMS[0]["items"] }) {
