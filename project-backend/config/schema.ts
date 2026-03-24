@@ -38,14 +38,16 @@ export const users = sqliteTable('users', {
 // chi cerca, se è remoto o fisico
 // Se accetta un scambio solo remoto o fisico
 // c'è da definire meglio
-// Status se ha già un offerente ed è stata chiusa
+// status dopo che l'offerente ha accettato,
+// anche l'utente deve confermare la sua accettazione
+// dopo la seconda accettazione bisogna creare la review request
 
 // Poi si deve essere Aviability_offers
 // le offerte fatte per ogni Aviability
 // Ogni utente può fare al massimo 2 offerte per lo scambio
 // Tutto il contenuto è pubblico niente chat privata.
 // Solo quando ci si mette d'accordo con lo scambio
-// status se è stata accettata
+// status se è stata accettata (viene accettata dall'utente che ha creato l'Aviability)
 
 // Poi viene creato la Review_request
 // Viene creata nel momento in cui un utente accetta uno scambio

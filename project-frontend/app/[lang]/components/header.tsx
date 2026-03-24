@@ -9,18 +9,16 @@ const NAV_ITEMS = [
     label: "Home",
     href: "/",
     items: [
-      { label: "Come funziona", href: "/landing/how-it-works", desc: "Scopri il loop Publish → Offer → Match" },
       { label: "Filosofia", href: "/landing/philosophy", desc: "Perché il tempo vale più del denaro" },
       { label: "Roadmap", href: "/landing/roadmap", desc: "Cosa stiamo costruendo" },
     ],
   },
   {
-    label: "Explore",
-    href: "/explore",
+    label: "Centro Scambi",
+    href: "/centro",
     items: [
-      { label: "Browse Availabilities", href: "/explore", desc: "Trova ciò di cui hai bisogno" },
-      { label: "Categories", href: "/explore/categories", desc: "Skills, tempo, presenza, servizi" },
-      { label: "Search & Filters", href: "/explore/search", desc: "Ricerca avanzata per tipo e zona" },
+      { label: "Accetta o offri uno scambio", href: "/centro", desc: "Accetta o offri uno scambio con altri utenti" },
+      { label: "Unisciti a una comminity", href: "/center/community", desc: "Scopri le community esistenti e unisci a loro" },
     ],
   },
   {
@@ -28,6 +26,20 @@ const NAV_ITEMS = [
     href: "/community",
     items: [
       { label: "Community", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Crea la tua community.", href: "/create-comminity", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Sport", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Musica", href: "/musica", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Eventi", href: "/eventi", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Talent", href: "/talenti", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      // { label: "Magia", href: "/magia", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+    ],
+  },
+    {
+    label: "Aiuto",
+    href: "/aiuto",
+    items: [
+      { label: "Come Fare uno scambio", href: "/landing/how-it-works", desc: "Scopri il loop Publish → Offer → Match" },
+      // { label: "Crea la tua community.", href: "/create-comminity", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Sport", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Musica", href: "/musica", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Eventi", href: "/eventi", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
