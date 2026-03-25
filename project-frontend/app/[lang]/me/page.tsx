@@ -222,8 +222,8 @@ export default function MePage() {
         </Link>
 
         <nav style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          <Link href={`/${lang}/explore`} style={{ fontSize: "13px", fontWeight: 600, color: "#6b7280", textDecoration: "none" }}>
-            Esplora
+          <Link href={`/${lang}/centro`} style={{ fontSize: "13px", fontWeight: 600, color: "#6b7280", textDecoration: "none" }}>
+            Esplora scambi
           </Link>
           <Link href={`/${lang}/publish`} style={{
             display: "flex", alignItems: "center", gap: "6px",
@@ -333,6 +333,7 @@ export default function MePage() {
             </div>
 
             {/* Edit profile btn */}
+            <Link href={"/me/edit"}>
             <button className="av-btn" style={{
               display: "flex", alignItems: "center", gap: "6px",
               background: "rgba(255,255,255,0.08)",
@@ -346,6 +347,7 @@ export default function MePage() {
               </svg>
               Modifica profilo
             </button>
+            </Link>
           </div>
 
           {/* Stats row */}

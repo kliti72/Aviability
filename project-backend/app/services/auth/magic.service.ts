@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import { emailService } from './magic.email.service'
 import { magicLinksRepository } from '../../repositories/auth/magic.link.repository'
+import { redirect } from 'elysia'
 
 export const magicLinksService = {
   send: async (email: string, type: 'login' | 'verify-email' = 'login') => {
@@ -20,8 +21,9 @@ export const magicLinksService = {
 
   verify: async (token: string) => {
     const link = await magicLinksRepository.getByToken(token)
+    const url = `${Bun.env.APP_URL}/auth/error-token`;
     if (!link) throw new Error('Token non valido')
-    if (link.used) throw new Error('Token già usato')
+    if (link.used) throw redirect(url);
     if (new Date(link.expiresAt) < new Date()) throw new Error('Token scaduto')
 
     await magicLinksRepository.markAsUsed(link.id)

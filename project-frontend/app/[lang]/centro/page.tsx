@@ -198,7 +198,7 @@ function EmptyState({ tab }: { tab: "remote" | "physical" }) {
       <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6 }}>
         Sii il primo a pubblicare qualcosa {tab === "remote" ? "in remoto" : "nella tua zona"}.
       </p>
-      <Link href="/aviabilities/create-disponibility" style={{
+      <Link href="/aviabilities/publish" style={{
         display: "inline-block", padding: "12px 24px",
         background: "linear-gradient(135deg,#059669,#10b981)",
         color: "#fff", borderRadius: 14, fontWeight: 700,

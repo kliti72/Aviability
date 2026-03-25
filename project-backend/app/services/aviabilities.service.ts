@@ -2,7 +2,7 @@ import * as aviabilitiesRepository from '../repositories/aviabilities.repository
 import type { Aviabilities, CreateAviabilitiesDto } from '../types/auth/types'
 
 // 10 giorni in ms
-const TEN_DAYS_MS = 1000 * 60 * 60 * 24 * 10
+const TEN_DAYS_MS = 1000 * 60 * 60 * 24 * 31
 
 export const aviabilitiesService = {
 

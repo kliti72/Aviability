@@ -5,6 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { getT } from "../i18n/translations";
 import { useLang } from "../context/LangContext";
+import { ApiError } from "../types/Auth.magic";
+import { authService } from "../services/Auth.service";
 
 interface AuthPageProps {
   callbackUrl?: string;
@@ -24,29 +26,26 @@ export default function AuthPage({ callbackUrl = "/" }: AuthPageProps) {
 
   const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
+
   const handleMagicLink = async () => {
-    if (!email.trim()) return;
-    setLoading(true);
-    setError("");
+    if (!email.trim()) return
+    setLoading(true)
+    setError('')
+
     try {
-      const res = await fetch(`${API}/auth/magic/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body?.message ?? "Errore invio");
-      }
-      setSent(true);
+      await authService.sendMagicLink(email)
+      setSent(true)
     } catch (e) {
-      console.log(e);
-      setError("Qualcosa è andato storto. Riprova.");
+      if (e instanceof ApiError && e.statusCode === 429) {
+        setError('Troppe richieste. Aspetta qualche minuto e riprova.')
+      } else {
+        setError('Qualcosa è andato storto. Riprova.')
+      }
+      console.error(e)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleGoogle = async () => {
     setGoogleLoading(true);

@@ -32,19 +32,31 @@ export const usersService = {
     return usersRepository.insert(dto)
   },
 
-  createFromEmail(email: string) {
-    const username = email.split('@')[0] || 'User-' + Math.floor(Math.random() * 9999)
+  createFromEmail(email: string, meta?: { ipAddress?: string; userAgent?: string }) {
+  const base = email.split('@')[0] || 'user'
 
-    const dto: CreateUsersDto = {
-      email,
-      verifiedEmail: false,
-      name: username,
-      givenName: username,
-      familyName: '',
-      picture: '',
-      locale: '',
-    }
-    return usersRepository.insert(dto)
+  // Handle: lowercase, solo alfanumerico + underscore, max 32 char
+  const handle = base
+    .toLowerCase()
+    .replace(/[^a-z0-9_]/g, '_')
+    .slice(0, 28)
+    .concat('_' + Math.floor(Math.random() * 999).toString().padStart(3, '0'))
+
+  const dto: CreateUsersDto = {
+    email,
+    verifiedEmail: false,
+    name:       base,
+    givenName:  base,
+    familyName: '',
+    picture:    '',
+    locale:     '',
+    handle,
+    // cifra lato app prima di passare questi valori
+    ipAddress:  meta?.ipAddress ?? null,
+    userAgent:  meta?.userAgent?.slice(0, 512) ?? null,
+  }
+
+  return usersRepository.insert(dto)
   },
 
   update(id: number, dto: Partial<CreateUsersDto>) {

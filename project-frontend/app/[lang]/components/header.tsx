@@ -244,7 +244,7 @@ export default function Header() {
             ))}
             {isAuthenticated && (
               <Link
-                href="/create-disponibility"
+                href="/publish"
                 style={{
                   
                   fontWeight: 700,

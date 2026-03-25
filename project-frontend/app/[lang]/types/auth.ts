@@ -1,3 +1,5 @@
+import { UserRole } from "./Auth.magic";
+
 export type AuthStatus = "idle" | "loading" | "authenticated" | "error" | "unauthenticated";
 
 export type AuthState =
@@ -12,19 +14,20 @@ export type AuthContextValue = AuthState & {
 }
 
 export interface User {
-  id: number;
-  email: string;
-  password: string | null;
-  verifiedEmail: boolean;
-  name: string;
-  givenName: string;
-  familyName: string;
-  picture: string;
-  locale: string;
-  createdAt: string;
-  bio: string;
-  isAnonymous: boolean;
-  role: string;
+  id: number
+  email: string
+  name: string
+  givenName: string
+  familyName: string
+  picture: string
+  locale: string
+  handle: string | null
+  bio: string | null
+  verifiedEmail: boolean
+  affidabilityScore: number
+  reviewCount: number
+  role: UserRole
+  createdAt: string
 }
 
 export interface Session {

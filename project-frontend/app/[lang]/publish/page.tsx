@@ -158,7 +158,7 @@ export default function PublishAviability() {
             <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6 }}>
               Devi essere autenticato per condividere la tua disponibilità.
             </p>
-            <Link href="/login" style={{
+            <Link href="/auth" style={{
               display: "inline-block", padding: "12px 28px",
               background: "linear-gradient(135deg,#059669,#10b981)",
               color: "#fff", borderRadius: 14, fontWeight: 700,
@@ -209,7 +209,7 @@ export default function PublishAviability() {
               <strong style={{ color: "#059669" }}>"{form.title}"</strong> è ora visibile a tutti.
             </p>
             <p style={{ color: "#6b7280", fontSize: 14, marginBottom: 36 }}>
-              Resterà attiva per <strong>10 giorni</strong>. Aspetta le offerte 🙌
+              Resterà attiva per <strong>31 giorni</strong>. Aspetta le offerte 🙌
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -224,7 +224,7 @@ export default function PublishAviability() {
               >
                 + Pubblica un'altra
               </button>
-              <Link href="/aviabilities" style={{
+              <Link href="/centro" style={{
                 padding: "12px 24px", background: "#fff",
                 color: "#0a1628", borderRadius: 14, fontWeight: 600,
                 border: "1.5px solid #d1d5db", textDecoration: "none", fontSize: 15,
@@ -255,7 +255,7 @@ export default function PublishAviability() {
         }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
             <span style={{ fontSize: 22, fontWeight: 800, color: "#059669", letterSpacing: "-0.04em" }}>
-              aviability
+              Scambio
             </span>
           </Link>
           {/* stepper */}
@@ -684,7 +684,7 @@ export default function PublishAviability() {
                   <span style={{
                     fontSize: 12, color: "rgba(110,231,183,0.7)", fontWeight: 600,
                   }}>
-                    10 giorni · attiva
+                    31 giorni · attiva
                   </span>
                 </div>
 
