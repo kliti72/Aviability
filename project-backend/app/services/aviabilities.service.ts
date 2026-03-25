@@ -14,6 +14,10 @@ export const aviabilitiesService = {
     return aviabilitiesRepository.findOpen()
   },
 
+  getWithUser() {
+    return aviabilitiesRepository.findWithUser()
+  },
+
   getById(id: number) {
     const item = aviabilitiesRepository.findById(id)
     if (!item) throw new Error(`Aviability ${id} not found.`)

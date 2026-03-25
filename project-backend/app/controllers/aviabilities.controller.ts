@@ -6,7 +6,7 @@ export const aviabilitiesController = new Elysia({ prefix: '/aviabilities' })
 
   // ── GET tutte (pubbliche) ────────────────────────────────────
   .get('/', () => {
-    return aviabilitiesService.getOpen()
+    return aviabilitiesService.getWithUser()
   })
 
   // ── GET per id ───────────────────────────────────────────────

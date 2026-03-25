@@ -45,3 +45,33 @@ export type CreateReviewRequestsDto = InferInsertModel<typeof reviewRequests>
 // ── reviews ──────────────────────────────────────────────────
 export type Reviews          = InferSelectModel<typeof reviews>
 export type CreateReviewsDto = InferInsertModel<typeof reviews>
+
+
+// ── composite types ──────────────────────────────────────────
+
+export type PublicUser = Pick<
+  Users,
+  'id' | 'name' | 'handle' | 'picture' | 'affidabilityScore' | 'reviewCount'
+>
+
+export type AviabilitiesWithUser = Aviabilities & {
+  user: PublicUser
+}
+
+export type AviabilityOfferWithOfferer = AviabilityOffers & {
+  offerer: PublicUser
+}
+
+export type AviabilitiesDetail = AviabilitiesWithUser & {
+  offers: AviabilityOfferWithOfferer[]
+}
+
+export type ExchangeConfirmationDetail = ExchangeConfirmations & {
+  aviability: AviabilitiesWithUser
+  offer:      AviabilityOfferWithOfferer
+}
+
+export type ReviewRequestWithUsers = ReviewRequests & {
+  reviewer:     PublicUser
+  reviewedUser: PublicUser
+}

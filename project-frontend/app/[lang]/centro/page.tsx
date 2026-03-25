@@ -3,42 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import { AviabilityCategory, AviabilityWithUser } from "../types/Aviability.types";
+import { aviabilitiesService } from "../services/aviabilities.service";
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+type Tab = "remote" | "physical";
 
-type Mode = "remote" | "physical" | "both";
-type Category =
-  | "skills" | "language" | "tech" | "sport"
-  | "music" | "talent_magic" | "event" | "other";
-
-interface Aviability {
-  id: number;
-  userId: number;
-  title: string;
-  description: string;
-  wantInReturn?: string;
-  mode: Mode;
-  location?: string;
-  category: Category;
-  status: string;
-  expiresAt: string;
-  createdAt: string;
-  user?: {
-    id: number;
-    name: string;
-    handle?: string;
-    picture?: string;
-    affidabilityScore: number;
-    reviewCount: number;
-  };
-}
-
-const CAT_EMOJI: Record<Category, string> = {
+const CAT_EMOJI: Record<AviabilityCategory, string> = {
   skills: "⚡", language: "🗣️", tech: "💻", sport: "🏃",
   music: "🎵", talent_magic: "✨", event: "📍", other: "🌱",
 };
 
-const CAT_LABEL: Record<Category, string> = {
+const CAT_LABEL: Record<AviabilityCategory, string> = {
   skills: "Skills", language: "Language", tech: "Tech", sport: "Sport",
   music: "Music", talent_magic: "Talent", event: "Event", other: "Altro",
 };
@@ -63,13 +38,14 @@ const styles = `
     box-shadow: 0 12px 40px rgba(5,150,105,0.14) !important;
     border-color: #bbf7d0 !important;
   }
-  .av-offer-btn:hover { background: linear-gradient(135deg,#047857,#059669) !important; transform:translateY(-1px); }
   .av-tab:hover { background: #f0fdf4 !important; }
   .av-input:focus { outline:none; border-color:#059669 !important; box-shadow:0 0 0 3px rgba(5,150,105,0.12) !important; }
   .av-input::placeholder { color:#9ca3af; }
   .pg-btn:hover:not(:disabled) { background:#f0fdf4 !important; border-color:#bbf7d0 !important; }
   .pg-btn:disabled { opacity:.4; cursor:not-allowed; }
 `;
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function StarScore({ score, count }: { score: number; count: number }) {
   if (count === 0) return (
@@ -84,12 +60,13 @@ function StarScore({ score, count }: { score: number; count: number }) {
   );
 }
 
-function AviabilityCard({ av, index }: { av: Aviability; index: number }) {
+function AviabilityCard({ av, index }: { av: AviabilityWithUser; index: number }) {
+  const daysLeft = Math.ceil(
+    (new Date(av.expiresAt).getTime() - Date.now()) / 86_400_000
+  );
+
   return (
-    <Link
-      href={`/aviabilities/${av.id}`}
-      style={{ textDecoration: "none" }}
-    >
+    <Link href={`/aviabilities/${av.id}`} style={{ textDecoration: "none" }}>
       <div
         className="av-card"
         style={{
@@ -121,18 +98,17 @@ function AviabilityCard({ av, index }: { av: Aviability; index: number }) {
           )}
         </div>
 
-        {/* titolo */}
+        {/* title */}
         <h3 style={{
           fontSize: 16, fontWeight: 800, color: "#0a1628",
-          letterSpacing: "-0.02em", lineHeight: 1.3,
-          marginBottom: 8,
+          letterSpacing: "-0.02em", lineHeight: 1.3, marginBottom: 8,
           display: "-webkit-box", WebkitLineClamp: 2,
           WebkitBoxOrient: "vertical", overflow: "hidden",
         }}>
           {av.title}
         </h3>
 
-        {/* descrizione */}
+        {/* description */}
         <p style={{
           fontSize: 13, color: "#4b5563", lineHeight: 1.6,
           marginBottom: 14, flexGrow: 1,
@@ -159,23 +135,15 @@ function AviabilityCard({ av, index }: { av: Aviability; index: number }) {
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {av.user?.picture && (
-              <img
-                src={av.user.picture} alt={av.user.name}
-                style={{ width: 28, height: 28, borderRadius: "50%", border: "2px solid #d1fae5" }}
-              />
-            )}
             <div>
               <div style={{ fontSize: 12, fontWeight: 700, color: "#0a1628" }}>
-                {av.user?.handle ? `@${av.user.handle}` : av.user?.name ?? "Utente"}
+                {av.user.handle ? `@${av.user.handle}` : av.user.name}
               </div>
-              <StarScore score={av.user?.affidabilityScore ?? 0} count={av.user?.reviewCount ?? 0} />
+              <StarScore score={av.user.affidabilityScore} count={av.user.reviewCount} />
             </div>
           </div>
-          <div style={{
-            fontSize: 11, color: "#9ca3af", fontWeight: 500,
-          }}>
-            {Math.ceil((new Date(av.expiresAt).getTime() - Date.now()) / 86400000)}g rimasti
+          <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 500 }}>
+            {daysLeft > 0 ? `${daysLeft}g rimasti` : "Scaduta"}
           </div>
         </div>
       </div>
@@ -183,12 +151,9 @@ function AviabilityCard({ av, index }: { av: Aviability; index: number }) {
   );
 }
 
-function EmptyState({ tab }: { tab: "remote" | "physical" }) {
+function EmptyState({ tab }: { tab: Tab }) {
   return (
-    <div style={{
-      textAlign: "center", padding: "64px 24px",
-      animation: "fadeIn .4s ease both",
-    }}>
+    <div style={{ textAlign: "center", padding: "64px 24px", animation: "fadeIn .4s ease both" }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>
         {tab === "remote" ? "🌐" : "📍"}
       </div>
@@ -198,56 +163,64 @@ function EmptyState({ tab }: { tab: "remote" | "physical" }) {
       <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6 }}>
         Sii il primo a pubblicare qualcosa {tab === "remote" ? "in remoto" : "nella tua zona"}.
       </p>
-      <Link href="/aviabilities/publish" style={{
-        display: "inline-block", padding: "12px 24px",
-        background: "linear-gradient(135deg,#059669,#10b981)",
-        color: "#fff", borderRadius: 14, fontWeight: 700,
-        textDecoration: "none", boxShadow: "0 4px 16px rgba(5,150,105,0.3)",
-        fontSize: 14,
-      }}>
+      <Link
+        href="/aviabilities/publish"
+        style={{
+          display: "inline-block", padding: "12px 24px",
+          background: "linear-gradient(135deg,#059669,#10b981)",
+          color: "#fff", borderRadius: 14, fontWeight: 700,
+          textDecoration: "none", boxShadow: "0 4px 16px rgba(5,150,105,0.3)",
+          fontSize: 14,
+        }}
+      >
         + Pubblica la tua
       </Link>
     </div>
   );
 }
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function AviabilitiesPage() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<"remote" | "physical">("remote");
-  const [all, setAll] = useState<Aviability[]>([]);
+
+  const [tab, setTab]       = useState<Tab>("remote");
+  const [all, setAll]       = useState<AviabilityWithUser[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError]   = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("Tutte");
-  const [page, setPage] = useState(1);
+  const [page, setPage]     = useState(1);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => { setMounted(true) }, []);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${API}/aviabilities`, { credentials: "include" })
-      .then((r) => r.json())
-      .then((data: Aviability[]) => setAll(Array.isArray(data) ? data : []))
-      .catch(() => setAll([]))
+    setError(null);
+    aviabilitiesService.getOpen()
+      .then(setAll)
+      .catch(() => setError("Impossibile caricare le aviability. Riprova."))
       .finally(() => setLoading(false));
   }, []);
 
-  // reset pagina quando cambiano filtri/tab
+  // reset page on filter/tab change
   useEffect(() => { setPage(1) }, [tab, search, region]);
 
   if (!mounted) return null;
 
-  // filtraggio
+  // ── filtering ────────────────────────────────────────────────
   const filtered = all.filter((av) => {
     const matchesTab =
       tab === "remote"
         ? av.mode === "remote" || av.mode === "both"
         : av.mode === "physical" || av.mode === "both";
 
+    const q = search.trim().toLowerCase();
     const matchesSearch =
-      !search.trim() ||
-      av.title.toLowerCase().includes(search.toLowerCase()) ||
-      av.description.toLowerCase().includes(search.toLowerCase());
+      !q ||
+      av.title.toLowerCase().includes(q) ||
+      av.description.toLowerCase().includes(q);
 
     const matchesRegion =
       tab === "remote" ||
@@ -258,16 +231,17 @@ export default function AviabilitiesPage() {
   });
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
+  // ── render ───────────────────────────────────────────────────
   return (
     <>
-      <style>{styles}</style>
-      <div style={{ minHeight: "100vh", background: "#fafffe" }}>
+      <style precedence="default" href="aviabilities-page">{styles}</style>
 
+      <div style={{ minHeight: "100vh", background: "#fafffe" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
 
-          {/* ── hero text ──────────────────────────────────── */}
+          {/* hero */}
           <div style={{ marginBottom: 36, animation: "fadeUp .4s ease both" }}>
             <h1 style={{
               fontSize: "clamp(26px,4vw,40px)", fontWeight: 800,
@@ -276,11 +250,15 @@ export default function AviabilitiesPage() {
               Cosa offrono le persone
             </h1>
             <p style={{ color: "#6b7280", fontSize: 16 }}>
-              {all.length > 0 ? `${all.length} aviability attive — trova il tuo match.` : "Caricamento..."}
+              {loading
+                ? "Caricamento..."
+                : error
+                  ? error
+                  : `${all.length} aviability attive — trova il tuo match.`}
             </p>
           </div>
 
-          {/* ── tabs ───────────────────────────────────────── */}
+          {/* tabs */}
           <div style={{
             display: "flex", gap: 8, marginBottom: 28,
             background: "#f3f4f6", borderRadius: 16, padding: 5,
@@ -305,7 +283,7 @@ export default function AviabilitiesPage() {
             ))}
           </div>
 
-          {/* ── filtri ─────────────────────────────────────── */}
+          {/* filters */}
           <div style={{
             display: "flex", gap: 12, marginBottom: 32, flexWrap: "wrap",
             animation: "fadeIn .35s ease both",
@@ -337,16 +315,22 @@ export default function AviabilitiesPage() {
                 }}
               >
                 {REGIONS.map((r) => (
-                  <option key={r} value={r}>{r === "Tutte" ? "📍 Tutte le regioni" : r}</option>
+                  <option key={r} value={r}>
+                    {r === "Tutte" ? "📍 Tutte le regioni" : r}
+                  </option>
                 ))}
               </select>
             )}
           </div>
 
-          {/* ── contenuto ──────────────────────────────────── */}
+          {/* content */}
           {loading ? (
             <div style={{ textAlign: "center", padding: "80px 0", color: "#9ca3af", fontSize: 15 }}>
               Caricamento...
+            </div>
+          ) : error ? (
+            <div style={{ textAlign: "center", padding: "80px 0", color: "#ef4444", fontSize: 15 }}>
+              {error}
             </div>
           ) : paginated.length === 0 ? (
             <EmptyState tab={tab} />
@@ -355,15 +339,14 @@ export default function AviabilitiesPage() {
               <div style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                gap: 18,
-                marginBottom: 40,
+                gap: 18, marginBottom: 40,
               }}>
                 {paginated.map((av, i) => (
                   <AviabilityCard key={av.id} av={av} index={i} />
                 ))}
               </div>
 
-              {/* ── paginazione ──────────────────────────────── */}
+              {/* pagination */}
               {totalPages > 1 && (
                 <div style={{
                   display: "flex", alignItems: "center",
@@ -417,6 +400,7 @@ export default function AviabilitiesPage() {
               )}
             </>
           )}
+
         </div>
       </div>
     </>

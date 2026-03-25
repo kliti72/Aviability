@@ -4,6 +4,7 @@ import { Providers } from "../provider";
 import { AuthProvider } from "./context/AuthContext";
 import { LangProvider } from "./context/LangContext";
 import Header from "./components/header";
+import { CookieBanner } from "./cookie/page";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ lang: string }> }
@@ -39,6 +40,7 @@ export default async function LangLayout({
       <AuthProvider>
         <Header />
             <LangProvider lang={locale}>
+                <CookieBanner privacyHref="/privacy" />
                 {children}
             </LangProvider>
       </AuthProvider>
