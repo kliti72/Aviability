@@ -10,10 +10,10 @@ export const aviabilitiesController = new Elysia({ prefix: '/aviabilities' })
   })
 
   // ── GET per id ───────────────────────────────────────────────
-  .get('/:id', ({ params }) => {
-    return aviabilitiesService.getById(Number(params.id))
+  .get('/:aviabilityId', ({ params }) => {
+    return aviabilitiesService.getById(Number(params.aviabilityId))
   }, {
-    params: t.Object({ id: t.Numeric() }),
+    params: t.Object({ aviabilityId: t.Numeric() }),
   })
 
   // ── GET le mie aviability ────────────────────────────────────
@@ -56,16 +56,16 @@ export const aviabilitiesController = new Elysia({ prefix: '/aviabilities' })
   })
 
   // ── PATCH aggiorna la mia aviability ────────────────────────
-  .patch('/:id', async ({ params, body, cookie, set }) => {
+  .patch('/:aviabilityId', async ({ params, body, cookie, set }) => {
     const accessToken = cookie.sessionAccessToken.value
     if (!accessToken) { set.status = 401; return { error: 'Non autenticato' } }
 
     const session = await sessionsService.findByAccessToken(accessToken)
     if (!session) { set.status = 401; return { error: 'Sessione non valida' } }
 
-    return aviabilitiesService.update(Number(params.id), session.userId, body)
+    return aviabilitiesService.update(Number(params.aviabilityId), session.userId, body)
   }, {
-    params: t.Object({ id: t.Numeric() }),
+    params: t.Object({ aviabilityId: t.Numeric() }),
     cookie: t.Cookie({ sessionAccessToken: t.String() }),
     body: t.Object({
       title:        t.Optional(t.String({ minLength: 1, maxLength: 80 })),
@@ -82,15 +82,15 @@ export const aviabilitiesController = new Elysia({ prefix: '/aviabilities' })
   })
 
   // ── DELETE cancella la mia aviability ───────────────────────
-  .delete('/:id', async ({ params, cookie, set }) => {
+  .delete('/:aviabilityId', async ({ params, cookie, set }) => {
     const accessToken = cookie.sessionAccessToken.value
     if (!accessToken) { set.status = 401; return { error: 'Non autenticato' } }
 
     const session = await sessionsService.findByAccessToken(accessToken)
     if (!session) { set.status = 401; return { error: 'Sessione non valida' } }
 
-    return aviabilitiesService.cancel(Number(params.id), session.userId)
+    return aviabilitiesService.cancel(Number(params.aviabilityId), session.userId)
   }, {
-    params: t.Object({ id: t.Numeric() }),
+    params: t.Object({ aviabilityId: t.Numeric() }),
     cookie: t.Cookie({ sessionAccessToken: t.String() }),
   })
