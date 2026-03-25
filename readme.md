@@ -102,5 +102,5 @@ Animations: fadeUp (opacity+translateY 28px), fadeIn, stagger con delay incremen
 Sezioni dark: gradiente #064e3b→#047857 con radial-gradient overlay verde semitrasparente.
 Decorazioni: floating dots pulse-dot, watermark numeri in background, badge pillola border-radius: 999px.
 Il componente deve essere "use client", usare Link da Next.js per i link, nessuna dipendenza esterna.
-
+Non usare font-family.
 ---

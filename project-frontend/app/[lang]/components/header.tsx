@@ -18,7 +18,6 @@ const NAV_ITEMS = [
     href: "/centro",
     items: [
       { label: "Accetta o offri uno scambio", href: "/centro", desc: "Accetta o offri uno scambio con altri utenti" },
-      { label: "Unisciti a una comminity", href: "/center/community", desc: "Scopri le community esistenti e unisci a loro" },
     ],
   },
   {
@@ -26,6 +25,7 @@ const NAV_ITEMS = [
     href: "/community",
     items: [
       { label: "Community", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
+      { label: "Pubblica la tua idea", href: "/idea", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Crea la tua community.", href: "/create-comminity", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Sport", href: "/community", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
       // { label: "Musica", href: "/musica", desc: "Un idea di creazione di community locali, in fase di sviluppo." },
