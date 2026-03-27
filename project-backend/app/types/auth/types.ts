@@ -8,6 +8,7 @@ import {
   exchangeConfirmations,
   reviewRequests,
   reviews,
+  exchangeMessages,
 } from '../../../config/schema'
 
 // ── users ────────────────────────────────────────────────────
@@ -46,6 +47,9 @@ export type CreateReviewRequestsDto = InferInsertModel<typeof reviewRequests>
 export type Reviews          = InferSelectModel<typeof reviews>
 export type CreateReviewsDto = InferInsertModel<typeof reviews>
 
+// ── exchange messages ─────────────────────────────────────────
+export type ExchangeMessages          = InferSelectModel<typeof exchangeMessages>
+export type CreateExchangeMessagesDto = InferInsertModel<typeof exchangeMessages>
 
 // ── composite types ──────────────────────────────────────────
 
@@ -74,4 +78,17 @@ export type ExchangeConfirmationDetail = ExchangeConfirmations & {
 export type ReviewRequestWithUsers = ReviewRequests & {
   reviewer:     PublicUser
   reviewedUser: PublicUser
+}
+
+export type ExchangeMessageWithSender = ExchangeMessages & {
+  sender: PublicUser
+}
+
+export type ExchangeConfirmationWithMessages = ExchangeConfirmations & {
+  messages: ExchangeMessageWithSender[]
+}
+
+export type ExchangeConfirmationWithRelations = ExchangeConfirmations & {
+  aviability: { userId: number }
+  offer:      { offererId: number }
 }

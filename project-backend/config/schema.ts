@@ -209,6 +209,34 @@ export const reviews = sqliteTable('reviews', {
 ])
 
 // ═══════════════════════════════════
+// exchange_messages
+// ═══════════════════════════════════
+// Messaggi privati tra publisher e offerente dopo che lo scambio è confermato.
+// Solo testo, max 1000 char.
+// readAt: null = non letto, stringa = timestamp lettura
+export const exchangeMessages = sqliteTable('exchange_messages', {
+  id:         integer('id').primaryKey({ autoIncrement: true }),
+  exchangeId: integer('exchange_id').notNull().references(() => exchangeConfirmations.id, { onDelete: 'cascade' }),
+  senderId:   integer('sender_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  message:    text('message').notNull(),
+  readAt:     text('read_at'),
+  createdAt:  text('created_at').notNull().default(sql`(datetime('now'))`),
+}, (table) => [
+  check('message_length', sql`length(${table.message}) <= 1000`),
+])
+
+export const exchangeMessagesRelations = relations(exchangeMessages, ({ one }) => ({
+  exchange: one(exchangeConfirmations, {
+    fields:     [exchangeMessages.exchangeId],
+    references: [exchangeConfirmations.id],
+  }),
+  sender: one(users, {
+    fields:     [exchangeMessages.senderId],
+    references: [users.id],
+  }),
+}))
+
+// ═══════════════════════════════════
 // magic_links
 // ═══════════════════════════════════
 export const magicLinks = sqliteTable('magic_links', {
@@ -244,6 +272,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   reviewRequestsReceived:many(reviewRequests, { relationName: 'reviewedUser' }),
   reviewsGiven:          many(reviews, { relationName: 'reviewer' }),
   reviewsReceived:       many(reviews, { relationName: 'reviewedUser' }),
+  messages: many(exchangeMessages),
 }))
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -266,6 +295,7 @@ export const exchangeConfirmationsRelations = relations(exchangeConfirmations, (
   aviability:     one(aviabilities,     { fields: [exchangeConfirmations.aviabilityId], references: [aviabilities.id] }),
   offer:          one(aviabilityOffers, { fields: [exchangeConfirmations.offerId],       references: [aviabilityOffers.id] }),
   reviewRequests: many(reviewRequests),
+  messages:        many(exchangeMessages), // ← aggiunto
 }))
 
 export const reviewRequestsRelations = relations(reviewRequests, ({ one }) => ({
