@@ -224,3 +224,18 @@ export interface ApiResponse<T> {
   data:    T
   message?: string
 }
+
+// ── Exchange Messages ─────────────────────────────────────────
+
+export interface ExchangeMessage {
+  id:         number
+  exchangeId: number
+  senderId:   number
+  message:    string
+  readAt:     string | null
+  createdAt:  string
+}
+
+export interface ExchangeMessageWithSender extends ExchangeMessage {
+  sender: PublicUser
+}

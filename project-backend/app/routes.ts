@@ -15,6 +15,7 @@ import { aviabilitiesController } from './controllers/aviabilities.controller'
 import { aviabilityOffersController } from './controllers/aviabilityOffers.controller'
 import { exchangeConfirmationsController } from './controllers/exchangeConfirmations.controller'
 import { reviewsController } from './controllers/reviews.controller'
+import { exchangeMessagesController } from './controllers/exchangeMessages.controller'
 
 export const routes: RouteConfig[] = [
   {
@@ -66,6 +67,11 @@ export const routes: RouteConfig[] = [
   },
   {
     controller: reviewsController,
+    enabled: true,
+    middleware: [],
+  },
+  {
+    controller: exchangeMessagesController,
     enabled: true,
     middleware: [],
   },

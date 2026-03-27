@@ -1,10 +1,23 @@
 // controllers/exchangeMessages.controller.ts
 
 import { Elysia, t } from 'elysia'
-import { sessionsService } from '../services/auth/sessions.service'
 import * as exchangeMessagesService from '../services/exchangeMessages.service'
+import { sessionsService } from '../services/auth/sessions.service'
 
 export const exchangeMessagesController = new Elysia({ prefix: '/exchanges' })
+
+  // ── GET lista chat dell'utente ───────────────────────────────
+  .get('/me', async ({ cookie, set }) => {
+    const accessToken = cookie.sessionAccessToken.value
+    if (!accessToken) { set.status = 401; return { error: 'Non autenticato' } }
+
+    const session = await sessionsService.findByAccessToken(accessToken)
+    if (!session) { set.status = 401; return { error: 'Sessione non valida' } }
+
+    return exchangeMessagesService.getMyChats(session.userId)
+  }, {
+    cookie: t.Cookie({ sessionAccessToken: t.String() }),
+  })
 
   // ── GET messaggi di un exchange ──────────────────────────────
   .get('/:exchangeId/messages', async ({ params, cookie, set }) => {
@@ -25,7 +38,7 @@ export const exchangeMessagesController = new Elysia({ prefix: '/exchanges' })
     cookie: t.Cookie({ sessionAccessToken: t.String() }),
   })
 
-  // ── POST invia un messaggio ──────────────────────────────────
+  // ── POST invia messaggio ─────────────────────────────────────
   .post('/:exchangeId/messages', async ({ params, body, cookie, set }) => {
     const accessToken = cookie.sessionAccessToken.value
     if (!accessToken) { set.status = 401; return { error: 'Non autenticato' } }
