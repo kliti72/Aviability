@@ -6,7 +6,7 @@ import type { CreateAviabilityOffersDto } from '../types/auth/types'
 export const aviabilityOffersService = {
 
   getByAviabilityId(aviabilityId: number) {
-    return offersRepository.findByAviabilityId(aviabilityId)
+    return offersRepository.findByAviabilityIdWithUser(aviabilityId)
   },
 
   getByOffererId(offererId: number) {
@@ -26,7 +26,12 @@ export const aviabilityOffersService = {
   ) {
     const av = aviabilitiesRepository.findById(dto.aviabilityId)
     if (!av) throw new Error(`Aviability ${dto.aviabilityId} not found.`)
-    if (av.status !== 'open') throw new Error('This aviability is no longer open.')
+      console.log(av);
+    if (av.status === 'completed' ||
+       av.status ===  'expired' || 
+       av.status ===  "cancelled") {
+       throw new Error('Questa Aviability è stata chiusa concretamente.')       
+      }
     if (av.userId === offererId) throw new Error('Cannot offer on your own aviability.')
 
     const offer = offersRepository.insert({ ...dto, offererId, status: 'pending' })

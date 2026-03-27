@@ -224,7 +224,7 @@ export default function PublishAviability() {
               >
                 + Pubblica un'altra
               </button>
-              <Link href="/centro" style={{
+              <Link href="/aviabilities" style={{
                 padding: "12px 24px", background: "#fff",
                 color: "#0a1628", borderRadius: 14, fontWeight: 600,
                 border: "1.5px solid #d1d5db", textDecoration: "none", fontSize: 15,

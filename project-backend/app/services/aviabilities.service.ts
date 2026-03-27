@@ -18,6 +18,10 @@ export const aviabilitiesService = {
     return aviabilitiesRepository.findWithUser()
   },
 
+  getWithUserById(aviabilityId : number) {
+    return aviabilitiesRepository.findByIdWithUser(aviabilityId)
+  },
+
   getById(id: number) {
     const item = aviabilitiesRepository.findById(id)
     if (!item) throw new Error(`Aviability ${id} not found.`)

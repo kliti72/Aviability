@@ -11,7 +11,7 @@ export const aviabilitiesController = new Elysia({ prefix: '/aviabilities' })
 
   // ── GET per id ───────────────────────────────────────────────
   .get('/:aviabilityId', ({ params }) => {
-    return aviabilitiesService.getById(Number(params.aviabilityId))
+    return aviabilitiesService.getWithUserById(Number(params.aviabilityId))
   }, {
     params: t.Object({ aviabilityId: t.Numeric() }),
   })

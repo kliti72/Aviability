@@ -222,7 +222,7 @@ export default function MePage() {
         </Link>
 
         <nav style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          <Link href={`/${lang}/centro`} style={{ fontSize: "13px", fontWeight: 600, color: "#6b7280", textDecoration: "none" }}>
+          <Link href={`/${lang}/aviabilities`} style={{ fontSize: "13px", fontWeight: 600, color: "#6b7280", textDecoration: "none" }}>
             Esplora scambi
           </Link>
           <Link href={`/${lang}/publish`} style={{

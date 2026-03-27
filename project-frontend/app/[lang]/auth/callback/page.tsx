@@ -47,7 +47,7 @@ export default function CallbackPage() {
         if (!user) throw new Error("User mancante");
         setUser(user, accessToken);
         setStatus("success");
-        setTimeout(() => router.replace("/centro"), 900);
+        setTimeout(() => router.replace("/aviabilities"), 900);
       })
       .catch(() => {
         setStatus("error");

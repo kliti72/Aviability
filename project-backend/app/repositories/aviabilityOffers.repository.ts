@@ -1,6 +1,6 @@
 import { eq, desc, and } from 'drizzle-orm'
-import { aviabilityOffers } from '../../config/schema'
-import type { AviabilityOffers, CreateAviabilityOffersDto } from '../types/auth/types'
+import { aviabilityOffers, users } from '../../config/schema'
+import type { AviabilityOffers, AviabilityOfferWithOfferer, CreateAviabilityOffersDto } from '../types/auth/types'
 import { db } from '../../config/database'
 
 export function findAll(): AviabilityOffers[] {
@@ -13,6 +13,34 @@ export function findById(id: number): AviabilityOffers | undefined {
 
 export function findByAviabilityId(aviabilityId: number): AviabilityOffers[] {
   return db.select().from(aviabilityOffers).where(eq(aviabilityOffers.aviabilityId, aviabilityId)).orderBy(desc(aviabilityOffers.createdAt)).all()
+}
+
+export function findByAviabilityIdWithUser(aviabilityId: number): AviabilityOfferWithOfferer[] {
+  return db
+    .select({
+      id:            aviabilityOffers.id,
+      aviabilityId:  aviabilityOffers.aviabilityId,
+      offererId:     aviabilityOffers.offererId,
+      message:       aviabilityOffers.message,
+      offerDetail:   aviabilityOffers.offerDetail,
+      preferredMode: aviabilityOffers.preferredMode,
+      status:        aviabilityOffers.status,
+      createdAt:     aviabilityOffers.createdAt,
+      updatedAt:     aviabilityOffers.updatedAt,
+      offerer: {
+        id:                users.id,
+        name:              users.name,
+        handle:            users.handle,
+        picture:           users.picture,
+        affidabilityScore: users.affidabilityScore,
+        reviewCount:       users.reviewCount,
+      },
+    })
+    .from(aviabilityOffers)
+    .innerJoin(users, eq(aviabilityOffers.offererId, users.id))
+    .where(eq(aviabilityOffers.aviabilityId, aviabilityId))
+    .orderBy(desc(aviabilityOffers.createdAt))
+    .all()
 }
 
 export function findByOffererId(offererId: number): AviabilityOffers[] {

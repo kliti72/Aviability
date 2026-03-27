@@ -15,9 +15,9 @@ const NAV_ITEMS = [
   },
   {
     label: "Centro Scambi",
-    href: "/centro",
+    href: "/aviabilities",
     items: [
-      { label: "Accetta o offri uno scambio", href: "/centro", desc: "Accetta o offri uno scambio con altri utenti" },
+      { label: "Accetta o offri uno scambio", href: "/aviabilities", desc: "Accetta o offri uno scambio con altri utenti" },
     ],
   },
   {
